@@ -1,0 +1,14 @@
+
+<!-- ajouter ce fichier dans votre  .m2/-->
+<servers>
+    <server>
+        <id>nexus-releases</id>
+        <username>admin</username>
+        <password>votre_mot_de_passe</password>
+    </server>
+    <server>
+        <id>nexus-snapshots</id>
+        <username>admin</username>
+        <password>votre_mot_de_passe</password>
+    </server>
+</servers>

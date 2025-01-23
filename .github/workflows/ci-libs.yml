@@ -1,0 +1,60 @@
+name: Build and Deploy
+
+on:
+  workflow_call:
+    inputs:
+      nexus_username:
+        description: "Nexus username"
+        required: true
+        type: string
+      nexus_password:
+        description: "Nexus password"
+        required: true
+        type: string
+      nexus_url:
+        description: "Nexus URL"
+        required: true
+        type: string
+      docker_nexus_domain:
+        description: "Docker Nexus domain"
+        required: true
+        type: string
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    env:
+      NEXUS_USERNAME: ${{ inputs.nexus_username }}
+      NEXUS_PASSWORD: ${{ inputs.nexus_password }}
+      NEXUS_URL: ${{ inputs.nexus_url }}
+      DOCKER_NEXUS_DOMAIN: ${{ inputs.docker_nexus_domain }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Decode and validate Maven settings
+        run: |
+          echo "Using Nexus URL: $NEXUS_URL"
+          echo "Docker Nexus Domain: $DOCKER_NEXUS_DOMAIN"
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven
+
+      - name: Build with Maven
+        run: mvn clean install -Denv.NEXUS_USERNAME=$NEXUS_USERNAME -Denv.NEXUS_PASSWORD=$NEXUS_PASSWORD -Denv.NEXUS_URL=$NEXUS_URL
+
+      - name: Deploy Artifact to Nexus
+        run: mvn deploy

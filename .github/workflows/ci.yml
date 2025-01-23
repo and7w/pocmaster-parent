@@ -1,0 +1,19 @@
+name: Extended CI Workflow
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  ci-libs-call:
+    uses: ./.github/workflows/ci-libs.yml
+    with:
+      nexus_username: ${{ secrets.NEXUS_USERNAME }}
+      nexus_password: ${{ secrets.NEXUS_PASSWORD }}
+      nexus_url: ${{ vars.NEXUS_URL }}
+      docker_nexus_domain: ${{ vars.DOCKER_NEXUS_DOMAIN }}
