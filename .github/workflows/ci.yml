@@ -11,9 +11,9 @@ on:
 
 jobs:
   ci-libs-call:
-    uses: andr7w/pocmaster-parent/.github/workflows/ci-libs.yml
+    uses: ./.github/workflows/ci-libs.yml
     with:
-      nexus_username: ${{ secrets.NEXUS_USERNAME }}
-      nexus_password: ${{ secrets.NEXUS_PASSWORD }}
       nexus_url: ${{ vars.NEXUS_URL }}
       docker_nexus_domain: ${{ vars.DOCKER_NEXUS_DOMAIN }}
+      nexus_username: ${{ secrets.NEXUS_USERNAME }}
+      nexus_password: ${{ secrets.NEXUS_PASSWORD }}
