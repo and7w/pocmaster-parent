@@ -5,7 +5,7 @@
 
 	<groupId>com.pocmaster</groupId>
 	<artifactId>pocmaster-parent</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<packaging>pom</packaging>
 	<name>PocMaster BOM</name>
 	<description>BOM for Spring Boot-based PocMaster Projects</description>
@@ -30,7 +30,7 @@
 		</repository>
 		<snapshotRepository>
 			<id>nexus-snapshots</id>
-			<url>http://93.96.246.136:8081/repository/maven-snapshots/</url>
+			<url>http://3.96.246.136:8081/repository/maven-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
