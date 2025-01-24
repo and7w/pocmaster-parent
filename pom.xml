@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.pocmaster</groupId>
-	<artifactId>pocmaster-bom</artifactId>
+	<artifactId>pocmaster-parent</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>PocMaster BOM</name>
