@@ -63,15 +63,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven
 
-      # Étape 8: Tester l'authentification Nexus
+      # Étape 4: Tester l'authentification Nexus
       - name: Test Nexus Authentication
         run: |
           curl -u ${{ secrets.NEXUS_USERNAME }}:${{ secrets.NEXUS_PASSWORD }} \
           ${{ vars.NEXUS_URL }}/repository/maven-snapshots/
-      #9
+
+      #Etape 5: Construire l'artifact
       - name: Build with Maven
         run: mvn clean install -Denv.NEXUS_USERNAME=$NEXUS_USERNAME -Denv.NEXUS_PASSWORD=$NEXUS_PASSWORD -Denv.NEXUS_URL=$NEXUS_URL
 
-      #10
+      #Etape 6: Deployer sur le serveur distant
       - name: Deploy Artifact to Nexus
         run: mvn deploy

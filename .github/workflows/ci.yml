@@ -15,5 +15,5 @@ jobs:
     with:
       nexus_url: ${{ vars.NEXUS_URL }}
       docker_nexus_domain: ${{ vars.DOCKER_NEXUS_DOMAIN }}
-      nexus_username: admin
-      nexus_password: d254a694-f6da-46c2-a875-4171433d7854
+      nexus_username: ${{ secrets.NEXUS_USERNAME }}
+      nexus_password: ${{ secrets.NEXUS_PASSWORD }}
