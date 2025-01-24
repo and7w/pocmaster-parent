@@ -45,11 +45,21 @@ jobs:
           echo "Using Nexus URL: $NEXUS_URL"
           echo "Docker Nexus Domain: $DOCKER_NEXUS_DOMAIN"
 
+
+      # Étape 2: Récupérer et valider settings.xml
+      - name: Decode and validate Maven settings
+        env:
+          MAVEN_SETTINGS: ${{ vars.MAVEN_SETTINGS }}
+        run: |
+          echo "$MAVEN_SETTINGS" | base64 --decode > ~/.m2/settings.xml
+          cat ~/.m2/settings.xml
+
+      # Étape 3: Mettre en cache les dépendances Maven
       - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml', '~/.m2/settings.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven
 
@@ -64,8 +74,4 @@ jobs:
 
       #10
       - name: Deploy Artifact to Nexus
-        run: mvn deploy -X
-        env:
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-          NEXUS_URL: ${{ vars.NEXUS_URL }}
+        run: mvn deploy
